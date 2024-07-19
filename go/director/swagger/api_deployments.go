@@ -29,10 +29,10 @@ type DeploymentsApiService service
 /*
 DeploymentsApiService Allow to get the Context of a deployment
 Request Deployment Context Info You should use this URL inside your deployment. The URL is injected in your deployment and can be found via the environment variable named ARBITRIUM_CONTEXT_URL
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param requestId Unique Identifier to keep track of your request across all Arbitrium ecosystem.
- * @param securityNumber Random Security number generate to validate the request id.
- * @param authorization Auto Generated token. This token is injected in your deployment and can be found via the environment variable named ARBITRIUM_CONTEXT_TOKEN
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param requestId Unique Identifier to keep track of your request across all Arbitrium ecosystem.
+  - @param securityNumber Random Security number generate to validate the request id.
+  - @param authorization Auto Generated token. This token is injected in your deployment and can be found via the environment variable named ARBITRIUM_CONTEXT_TOKEN
 
 @return Deployment
 */
@@ -142,8 +142,8 @@ func (a *DeploymentsApiService) ContextGet(ctx context.Context, requestId string
 /*
 DeploymentsApiService Allow to deploy a new Instance of an App
 Deploy an Application
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param payload
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param payload
 
 @return Request
 */
@@ -419,8 +419,8 @@ func (a *DeploymentsApiService) DeploymentDelete(ctx context.Context, requestId 
 /*
 DeploymentsApiService Allow to get the Container Logs of a Deployment
 Get a deployment container log.
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param requestId
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param requestId
 
 @return DeploymentLogs
 */
@@ -541,8 +541,8 @@ func (a *DeploymentsApiService) DeploymentGetLogs(ctx context.Context, requestId
 /*
 DeploymentsApiService Allow to get The current status of a request
 Get Deployment Request status
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param requestId Unique Identifier to keep track of your request across all Arbitrium ecosystem. It&#39;s included in the response of the app deploy, example:    93924761ccde
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param requestId Unique Identifier to keep track of your request across all Arbitrium ecosystem. It&#39;s included in the response of the app deploy, example:    93924761ccde
 
 @return Status
 */
@@ -663,7 +663,7 @@ func (a *DeploymentsApiService) DeploymentStatusGet(ctx context.Context, request
 /*
 DeploymentsApiService Allow to get the List of Deployments
 Get All Deployments
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 
 @return Deployments
 */

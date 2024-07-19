@@ -28,9 +28,9 @@ type ApplicationsApiService service
 /*
 ApplicationsApiService Allow to Delete a single App Version
 Delete App Version
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param appName The Name of the App
- * @param versionName The Name of the Version
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param appName The Name of the App
+  - @param versionName The Name of the Version
 
 @return AppCreation
 */
@@ -152,9 +152,9 @@ func (a *ApplicationsApiService) AppVersionDelete(ctx context.Context, appName s
 /*
 ApplicationsApiService Allow to Read a single App Version
 Get App version
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param appName The Name of the App
- * @param versionName The Name of the Version
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param appName The Name of the App
+  - @param versionName The Name of the Version
 
 @return AppVersion
 */
@@ -276,9 +276,9 @@ func (a *ApplicationsApiService) AppVersionGet(ctx context.Context, appName stri
 /*
 ApplicationsApiService Allow to Create a Version for an App
 Create app version
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param appName The Name of the App
- * @param payload
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param appName The Name of the App
+  - @param payload
 
 @return AppCreation
 */
@@ -401,10 +401,10 @@ func (a *ApplicationsApiService) AppVersionPost(ctx context.Context, appName str
 /*
 ApplicationsApiService Delete the ACL whitelist entry for an app version
 Get the ACL whitelist entry for an app version
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param appName The Name of the App
- * @param versionName The Name of the App version
- * @param entryId The unique ID of the entry
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param appName The Name of the App
+  - @param versionName The Name of the App version
+  - @param entryId The unique ID of the entry
 
 @return AppVersionWhitelistEntrySuccess
 */
@@ -527,10 +527,10 @@ func (a *ApplicationsApiService) AppVersionWhitelistEntryDelete(ctx context.Cont
 /*
 ApplicationsApiService Get the ACL whitelist entry for an app version
 Get the ACL whitelist entry for an app version
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param appName The Name of the App
- * @param versionName The Name of the App version
- * @param entryId The unique ID of the entry
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param appName The Name of the App
+  - @param versionName The Name of the App version
+  - @param entryId The unique ID of the entry
 
 @return AppVersionWhitelistEntry
 */
@@ -653,9 +653,9 @@ func (a *ApplicationsApiService) AppVersionWhitelistEntryGet(ctx context.Context
 /*
 ApplicationsApiService Get the ACL whitelist for an app version
 Get the ACL whitelist for an app version
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param appName The Name of the App
- * @param versionName The Name of the App version
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param appName The Name of the App
+  - @param versionName The Name of the App version
 
 @return AppVersionWhitelistResponse
 */
@@ -777,10 +777,10 @@ func (a *ApplicationsApiService) AppVersionWhitelistGet(ctx context.Context, app
 /*
 ApplicationsApiService Create an ACL whitelist entry for an app version
 Create an ACL whitelist entry for an app version
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param appName The Name of the App
- * @param versionName The Name of the App version
- * @param payload
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param appName The Name of the App
+  - @param versionName The Name of the App version
+  - @param payload
 
 @return AppVersionWhitelistEntrySuccess
 */
@@ -904,8 +904,8 @@ func (a *ApplicationsApiService) AppVersionWhitelistPost(ctx context.Context, ap
 /*
 ApplicationsApiService Allow to List all Versions of an App
 Get all app version of app
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param appName The Name of the App
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param appName The Name of the App
 
 @return AppVersions
 */
@@ -1026,10 +1026,10 @@ func (a *ApplicationsApiService) AppVersionsGet(ctx context.Context, appName str
 /*
 ApplicationsApiService Allow to Update a single App Version
 Update App Version
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param appName The Name of the App
- * @param versionName The Name of the Version
- * @param payload
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param appName The Name of the App
+  - @param versionName The Name of the Version
+  - @param payload
 
 @return AppCreation
 */
@@ -1153,10 +1153,8 @@ func (a *ApplicationsApiService) AppVersionsPatch(ctx context.Context, appName s
 /*
 ApplicationsApiService Delete an application
 Delete an application from a client
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param appName
-
-
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param appName
 */
 func (a *ApplicationsApiService) ApplicationDelete(ctx context.Context, appName string) (*http.Response, error) {
 	var (
@@ -1257,8 +1255,8 @@ func (a *ApplicationsApiService) ApplicationDelete(ctx context.Context, appName 
 /*
 ApplicationsApiService Get an application with its unique name
 Gets application
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param appName
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param appName
 
 @return Application
 */
@@ -1379,9 +1377,9 @@ func (a *ApplicationsApiService) ApplicationGet(ctx context.Context, appName str
 /*
 ApplicationsApiService Update an application with new data
 Update an application from a client
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param appName
- * @param payload
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param appName
+  - @param payload
 
 @return Application
 */
@@ -1504,8 +1502,8 @@ func (a *ApplicationsApiService) ApplicationPatch(ctx context.Context, appName s
 /*
 ApplicationsApiService Create a new application
 Create an application from a client
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param payload
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param payload
 
 @return Application
 */
@@ -1627,7 +1625,7 @@ func (a *ApplicationsApiService) ApplicationPost(ctx context.Context, payload Ap
 /*
 ApplicationsApiService Get all applications you owns
 Get applications list
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 
 @return Applications
 */

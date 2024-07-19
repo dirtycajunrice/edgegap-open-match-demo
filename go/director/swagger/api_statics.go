@@ -27,7 +27,7 @@ type StaticsApiService service
 /*
 StaticsApiService Gets the list of static sites of Arbitrium
 Gets the list of static sites of Arbitrium
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 
 @return StaticSitesList
 */

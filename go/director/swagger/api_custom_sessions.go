@@ -23,29 +23,153 @@ var (
 	_ context.Context
 )
 
-type SessionsApiService service
+type CustomSessionsApiService service
 
 /*
-SessionsApiService Delete Users from a Session
-Remove Users from a Specific Session
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param sessionId
- * @param payload
+CustomSessionsApiService Delete a Custom Session from a Deployment
+Delete a Custom Session from a Deployment
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param customId Custom ID Managed by you
+  - @param requestId Deployment Request ID
 
-@return SessionUserContext
+@return Delete
 */
-func (a *SessionsApiService) DeleteUsersSession(ctx context.Context, sessionId string, payload PatchSessionModel) (SessionUserContext, *http.Response, error) {
+func (a *CustomSessionsApiService) DeleteCustomSession(ctx context.Context, customId string, requestId string) (Delete, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Delete")
 		localVarPostBody    interface{}
 		localVarFileName    string
 		localVarFileBytes   []byte
-		localVarReturnValue SessionUserContext
+		localVarReturnValue Delete
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/v1/session/{session_id}/users"
-	localVarPath = strings.Replace(localVarPath, "{"+"session_id"+"}", fmt.Sprintf("%v", sessionId), -1)
+	localVarPath := a.client.cfg.BasePath + "/v1/deployment/{request_id}/custom/session/{custom_id}"
+	localVarPath = strings.Replace(localVarPath, "{"+"custom_id"+"}", fmt.Sprintf("%v", customId), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"request_id"+"}", fmt.Sprintf("%v", requestId), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHttpContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
+	if localVarHttpContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHttpContentType
+	}
+
+	// to determine the Accept header
+	localVarHttpHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
+	if localVarHttpHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
+	}
+	if ctx != nil {
+		// API Key Authentication
+		if auth, ok := ctx.Value(ContextAPIKey).(APIKey); ok {
+			var key string
+			if auth.Prefix != "" {
+				key = auth.Prefix + " " + auth.Key
+			} else {
+				key = auth.Key
+			}
+			localVarHeaderParams["authorization"] = key
+
+		}
+	}
+	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHttpResponse, err := a.client.callAPI(r)
+	if err != nil || localVarHttpResponse == nil {
+		return localVarReturnValue, localVarHttpResponse, err
+	}
+
+	localVarBody, err := ioutil.ReadAll(localVarHttpResponse.Body)
+	localVarHttpResponse.Body.Close()
+	if err != nil {
+		return localVarReturnValue, localVarHttpResponse, err
+	}
+
+	if localVarHttpResponse.StatusCode < 300 {
+		// If we succeed, return the data, otherwise pass on to decode error.
+		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+		return localVarReturnValue, localVarHttpResponse, err
+	}
+
+	if localVarHttpResponse.StatusCode >= 300 {
+		newErr := GenericSwaggerError{
+			body:  localVarBody,
+			error: localVarHttpResponse.Status,
+		}
+
+		if localVarHttpResponse.StatusCode == 200 {
+			var v Delete
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHttpResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHttpResponse, newErr
+		}
+
+		if localVarHttpResponse.StatusCode == 400 {
+			var v ModelError
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHttpResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHttpResponse, newErr
+		}
+
+		if localVarHttpResponse.StatusCode == 401 {
+			var v ModelError
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHttpResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHttpResponse, newErr
+		}
+
+		return localVarReturnValue, localVarHttpResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHttpResponse, nil
+}
+
+/*
+CustomSessionsApiService Delete Many Custom Sessions from a Deployment
+Delete Many Custom Sessions from a Deployment
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param requestId Deployment Request ID
+  - @param payload
+
+@return BulkSessionDelete
+*/
+func (a *CustomSessionsApiService) DeleteCustomSessions(ctx context.Context, requestId string, payload CustomSessionDeleteModel) (BulkSessionDelete, *http.Response, error) {
+	var (
+		localVarHttpMethod  = strings.ToUpper("Delete")
+		localVarPostBody    interface{}
+		localVarFileName    string
+		localVarFileBytes   []byte
+		localVarReturnValue BulkSessionDelete
+	)
+
+	// create path and map variables
+	localVarPath := a.client.cfg.BasePath + "/v1/deployment/{request_id}/custom/sessions"
+	localVarPath = strings.Replace(localVarPath, "{"+"request_id"+"}", fmt.Sprintf("%v", requestId), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -112,7 +236,7 @@ func (a *SessionsApiService) DeleteUsersSession(ctx context.Context, sessionId s
 		}
 
 		if localVarHttpResponse.StatusCode == 200 {
-			var v SessionUserContext
+			var v BulkSessionDelete
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -151,14 +275,15 @@ func (a *SessionsApiService) DeleteUsersSession(ctx context.Context, sessionId s
 }
 
 /*
-SessionsApiService Allow to get a specific session&#39;s information
-Get a specific session
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param sessionId
+CustomSessionsApiService Get a specific Custom Session from a Deployment
+Get a specific Custom Session from a Deployment
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param customId Custom ID Managed by you
+  - @param requestId Deployment Request ID
 
 @return SessionGet
 */
-func (a *SessionsApiService) GetSession(ctx context.Context, sessionId string) (SessionGet, *http.Response, error) {
+func (a *CustomSessionsApiService) GetCustomSession(ctx context.Context, customId string, requestId string) (SessionGet, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
@@ -168,8 +293,9 @@ func (a *SessionsApiService) GetSession(ctx context.Context, sessionId string) (
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/v1/session/{session_id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"session_id"+"}", fmt.Sprintf("%v", sessionId), -1)
+	localVarPath := a.client.cfg.BasePath + "/v1/deployment/{request_id}/custom/session/{custom_id}"
+	localVarPath = strings.Replace(localVarPath, "{"+"custom_id"+"}", fmt.Sprintf("%v", customId), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"request_id"+"}", fmt.Sprintf("%v", requestId), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -273,135 +399,14 @@ func (a *SessionsApiService) GetSession(ctx context.Context, sessionId string) (
 }
 
 /*
-SessionsApiService Get Users of a Specific Session
-Get Users of a Specific Session
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param sessionId
-
-@return SessionUserContext
-*/
-func (a *SessionsApiService) GetUsersSession(ctx context.Context, sessionId string) (SessionUserContext, *http.Response, error) {
-	var (
-		localVarHttpMethod  = strings.ToUpper("Get")
-		localVarPostBody    interface{}
-		localVarFileName    string
-		localVarFileBytes   []byte
-		localVarReturnValue SessionUserContext
-	)
-
-	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/v1/session/{session_id}/users"
-	localVarPath = strings.Replace(localVarPath, "{"+"session_id"+"}", fmt.Sprintf("%v", sessionId), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{"application/json"}
-
-	// set Content-Type header
-	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
-	if localVarHttpContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHttpContentType
-	}
-
-	// to determine the Accept header
-	localVarHttpHeaderAccepts := []string{"application/json"}
-
-	// set Accept header
-	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
-	if localVarHttpHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
-	}
-	if ctx != nil {
-		// API Key Authentication
-		if auth, ok := ctx.Value(ContextAPIKey).(APIKey); ok {
-			var key string
-			if auth.Prefix != "" {
-				key = auth.Prefix + " " + auth.Key
-			} else {
-				key = auth.Key
-			}
-			localVarHeaderParams["authorization"] = key
-
-		}
-	}
-	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHttpResponse, err := a.client.callAPI(r)
-	if err != nil || localVarHttpResponse == nil {
-		return localVarReturnValue, localVarHttpResponse, err
-	}
-
-	localVarBody, err := ioutil.ReadAll(localVarHttpResponse.Body)
-	localVarHttpResponse.Body.Close()
-	if err != nil {
-		return localVarReturnValue, localVarHttpResponse, err
-	}
-
-	if localVarHttpResponse.StatusCode < 300 {
-		// If we succeed, return the data, otherwise pass on to decode error.
-		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
-		return localVarReturnValue, localVarHttpResponse, err
-	}
-
-	if localVarHttpResponse.StatusCode >= 300 {
-		newErr := GenericSwaggerError{
-			body:  localVarBody,
-			error: localVarHttpResponse.Status,
-		}
-
-		if localVarHttpResponse.StatusCode == 200 {
-			var v SessionUserContext
-			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHttpResponse, newErr
-			}
-			newErr.model = v
-			return localVarReturnValue, localVarHttpResponse, newErr
-		}
-
-		if localVarHttpResponse.StatusCode == 400 {
-			var v ModelError
-			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHttpResponse, newErr
-			}
-			newErr.model = v
-			return localVarReturnValue, localVarHttpResponse, newErr
-		}
-
-		if localVarHttpResponse.StatusCode == 401 {
-			var v ModelError
-			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHttpResponse, newErr
-			}
-			newErr.model = v
-			return localVarReturnValue, localVarHttpResponse, newErr
-		}
-
-		return localVarReturnValue, localVarHttpResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHttpResponse, nil
-}
-
-/*
-SessionsApiService Allow to get a list of sessions with basic information
-Get All Sessions
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+CustomSessionsApiService Get Custom Sessions from a Deployment
+Get Custom Sessions from a Deployment
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param requestId Deployment Request ID
 
 @return Sessions
 */
-func (a *SessionsApiService) ListSessions(ctx context.Context) (Sessions, *http.Response, error) {
+func (a *CustomSessionsApiService) GetCustomSessions(ctx context.Context, requestId string) (Sessions, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
@@ -411,7 +416,8 @@ func (a *SessionsApiService) ListSessions(ctx context.Context) (Sessions, *http.
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/v1/sessions"
+	localVarPath := a.client.cfg.BasePath + "/v1/deployment/{request_id}/custom/sessions"
+	localVarPath = strings.Replace(localVarPath, "{"+"request_id"+"}", fmt.Sprintf("%v", requestId), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -515,26 +521,28 @@ func (a *SessionsApiService) ListSessions(ctx context.Context) (Sessions, *http.
 }
 
 /*
-SessionsApiService Add Users to a Specific Session
-Add Users to a Specific Session
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param sessionId
- * @param payload
+CustomSessionsApiService Update a Custom Session from a Deployment
+Update a Custom Session from a Deployment
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param customId Custom ID Managed by you
+  - @param requestId Deployment Request ID
+  - @param payload
 
-@return SessionUserContext
+@return SessionGet
 */
-func (a *SessionsApiService) PutUsersSession(ctx context.Context, sessionId string, payload PatchSessionModel) (SessionUserContext, *http.Response, error) {
+func (a *CustomSessionsApiService) PatchCustomSession(ctx context.Context, customId string, requestId string, payload CustomSessionModel) (SessionGet, *http.Response, error) {
 	var (
-		localVarHttpMethod  = strings.ToUpper("Put")
+		localVarHttpMethod  = strings.ToUpper("Patch")
 		localVarPostBody    interface{}
 		localVarFileName    string
 		localVarFileBytes   []byte
-		localVarReturnValue SessionUserContext
+		localVarReturnValue SessionGet
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/v1/session/{session_id}/users"
-	localVarPath = strings.Replace(localVarPath, "{"+"session_id"+"}", fmt.Sprintf("%v", sessionId), -1)
+	localVarPath := a.client.cfg.BasePath + "/v1/deployment/{request_id}/custom/session/{custom_id}"
+	localVarPath = strings.Replace(localVarPath, "{"+"custom_id"+"}", fmt.Sprintf("%v", customId), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"request_id"+"}", fmt.Sprintf("%v", requestId), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -601,7 +609,7 @@ func (a *SessionsApiService) PutUsersSession(ctx context.Context, sessionId stri
 		}
 
 		if localVarHttpResponse.StatusCode == 200 {
-			var v SessionUserContext
+			var v SessionGet
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -640,147 +648,16 @@ func (a *SessionsApiService) PutUsersSession(ctx context.Context, sessionId stri
 }
 
 /*
-SessionsApiService Allow to stop a session for the client
-Delete a session with it&#39;s users
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param sessionId
-
-@return Delete
-*/
-func (a *SessionsApiService) SessionDelete(ctx context.Context, sessionId string) (Delete, *http.Response, error) {
-	var (
-		localVarHttpMethod  = strings.ToUpper("Delete")
-		localVarPostBody    interface{}
-		localVarFileName    string
-		localVarFileBytes   []byte
-		localVarReturnValue Delete
-	)
-
-	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/v1/session/{session_id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"session_id"+"}", fmt.Sprintf("%v", sessionId), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{"application/json"}
-
-	// set Content-Type header
-	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
-	if localVarHttpContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHttpContentType
-	}
-
-	// to determine the Accept header
-	localVarHttpHeaderAccepts := []string{"application/json"}
-
-	// set Accept header
-	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
-	if localVarHttpHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
-	}
-	if ctx != nil {
-		// API Key Authentication
-		if auth, ok := ctx.Value(ContextAPIKey).(APIKey); ok {
-			var key string
-			if auth.Prefix != "" {
-				key = auth.Prefix + " " + auth.Key
-			} else {
-				key = auth.Key
-			}
-			localVarHeaderParams["authorization"] = key
-
-		}
-	}
-	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHttpResponse, err := a.client.callAPI(r)
-	if err != nil || localVarHttpResponse == nil {
-		return localVarReturnValue, localVarHttpResponse, err
-	}
-
-	localVarBody, err := ioutil.ReadAll(localVarHttpResponse.Body)
-	localVarHttpResponse.Body.Close()
-	if err != nil {
-		return localVarReturnValue, localVarHttpResponse, err
-	}
-
-	if localVarHttpResponse.StatusCode < 300 {
-		// If we succeed, return the data, otherwise pass on to decode error.
-		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
-		return localVarReturnValue, localVarHttpResponse, err
-	}
-
-	if localVarHttpResponse.StatusCode >= 300 {
-		newErr := GenericSwaggerError{
-			body:  localVarBody,
-			error: localVarHttpResponse.Status,
-		}
-
-		if localVarHttpResponse.StatusCode == 200 {
-			var v Delete
-			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHttpResponse, newErr
-			}
-			newErr.model = v
-			return localVarReturnValue, localVarHttpResponse, newErr
-		}
-
-		if localVarHttpResponse.StatusCode == 400 {
-			var v ModelError
-			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHttpResponse, newErr
-			}
-			newErr.model = v
-			return localVarReturnValue, localVarHttpResponse, newErr
-		}
-
-		if localVarHttpResponse.StatusCode == 401 {
-			var v ModelError
-			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHttpResponse, newErr
-			}
-			newErr.model = v
-			return localVarReturnValue, localVarHttpResponse, newErr
-		}
-
-		if localVarHttpResponse.StatusCode == 410 {
-			var v ModelError
-			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHttpResponse, newErr
-			}
-			newErr.model = v
-			return localVarReturnValue, localVarHttpResponse, newErr
-		}
-
-		return localVarReturnValue, localVarHttpResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHttpResponse, nil
-}
-
-/*
-SessionsApiService Create a new Session with it&#39;s user
-Create a session with it&#39;s session users
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param payload
+CustomSessionsApiService Deploy a Custom Session to a Deployment
+Deploy a Custom Session to a Deployment
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param customId Custom ID Managed by you
+  - @param requestId Deployment Request ID
+  - @param payload
 
 @return SessionRequest
 */
-func (a *SessionsApiService) SessionPost(ctx context.Context, payload SessionModel) (SessionRequest, *http.Response, error) {
+func (a *CustomSessionsApiService) PostCustomSession(ctx context.Context, customId string, requestId string, payload CustomSessionModel) (SessionRequest, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Post")
 		localVarPostBody    interface{}
@@ -790,7 +667,9 @@ func (a *SessionsApiService) SessionPost(ctx context.Context, payload SessionMod
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/v1/session"
+	localVarPath := a.client.cfg.BasePath + "/v1/deployment/{request_id}/custom/session/{custom_id}"
+	localVarPath = strings.Replace(localVarPath, "{"+"custom_id"+"}", fmt.Sprintf("%v", customId), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"request_id"+"}", fmt.Sprintf("%v", requestId), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -889,7 +768,121 @@ func (a *SessionsApiService) SessionPost(ctx context.Context, payload SessionMod
 			return localVarReturnValue, localVarHttpResponse, newErr
 		}
 
-		if localVarHttpResponse.StatusCode == 409 {
+		return localVarReturnValue, localVarHttpResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHttpResponse, nil
+}
+
+/*
+CustomSessionsApiService Deploy Many Custom Sessions to a Deployment
+Deploy Many Custom Sessions to a Deployment
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param requestId Deployment Request ID
+  - @param payload
+
+@return BulkSessionPost
+*/
+func (a *CustomSessionsApiService) PostCustomSessions(ctx context.Context, requestId string, payload CustomBulkSessionsModel) (BulkSessionPost, *http.Response, error) {
+	var (
+		localVarHttpMethod  = strings.ToUpper("Post")
+		localVarPostBody    interface{}
+		localVarFileName    string
+		localVarFileBytes   []byte
+		localVarReturnValue BulkSessionPost
+	)
+
+	// create path and map variables
+	localVarPath := a.client.cfg.BasePath + "/v1/deployment/{request_id}/custom/sessions"
+	localVarPath = strings.Replace(localVarPath, "{"+"request_id"+"}", fmt.Sprintf("%v", requestId), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHttpContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
+	if localVarHttpContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHttpContentType
+	}
+
+	// to determine the Accept header
+	localVarHttpHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
+	if localVarHttpHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
+	}
+	// body params
+	localVarPostBody = &payload
+	if ctx != nil {
+		// API Key Authentication
+		if auth, ok := ctx.Value(ContextAPIKey).(APIKey); ok {
+			var key string
+			if auth.Prefix != "" {
+				key = auth.Prefix + " " + auth.Key
+			} else {
+				key = auth.Key
+			}
+			localVarHeaderParams["authorization"] = key
+
+		}
+	}
+	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHttpResponse, err := a.client.callAPI(r)
+	if err != nil || localVarHttpResponse == nil {
+		return localVarReturnValue, localVarHttpResponse, err
+	}
+
+	localVarBody, err := ioutil.ReadAll(localVarHttpResponse.Body)
+	localVarHttpResponse.Body.Close()
+	if err != nil {
+		return localVarReturnValue, localVarHttpResponse, err
+	}
+
+	if localVarHttpResponse.StatusCode < 300 {
+		// If we succeed, return the data, otherwise pass on to decode error.
+		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+		return localVarReturnValue, localVarHttpResponse, err
+	}
+
+	if localVarHttpResponse.StatusCode >= 300 {
+		newErr := GenericSwaggerError{
+			body:  localVarBody,
+			error: localVarHttpResponse.Status,
+		}
+
+		if localVarHttpResponse.StatusCode == 200 {
+			var v BulkSessionPost
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHttpResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHttpResponse, newErr
+		}
+
+		if localVarHttpResponse.StatusCode == 400 {
+			var v ModelError
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHttpResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHttpResponse, newErr
+		}
+
+		if localVarHttpResponse.StatusCode == 401 {
 			var v ModelError
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
