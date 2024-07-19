@@ -9,8 +9,8 @@
 
 package swagger
 
-type AppCreation struct {
-	// If the creation happened correctly
-	Success bool `json:"success,omitempty"`
-	Version *AppVersion `json:"version,omitempty"`
+type MetricsModel struct {
+	Labels     []string  `json:"labels,omitempty"`
+	Datasets   []float32 `json:"datasets,omitempty"`
+	Timestamps []string  `json:"timestamps,omitempty"`
 }

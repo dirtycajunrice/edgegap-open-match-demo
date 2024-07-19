@@ -9,8 +9,7 @@
 
 package swagger
 
-type MetricsModel struct {
-	Labels []string `json:"labels,omitempty"`
-	Datasets []float32 `json:"datasets,omitempty"`
-	Timestamps []string `json:"timestamps,omitempty"`
+type AppVersions struct {
+	Versions   []AppVersion `json:"versions,omitempty"`
+	TotalCount int32        `json:"total_count,omitempty"`
 }

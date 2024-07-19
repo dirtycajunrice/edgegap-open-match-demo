@@ -20,8 +20,8 @@ type Deployment struct {
 	Ready bool `json:"ready"`
 	// if the deployment ACL is active
 	WhitelistingActive bool `json:"whitelisting_active"`
-	// 
-	Fqdn string `json:"fqdn"`
+	//
+	Fqdn  string                 `json:"fqdn"`
 	Ports map[string]PortMapping `json:"ports,omitempty"`
 	// Location related information
 	Location *DeploymentLocation `json:"location,omitempty"`

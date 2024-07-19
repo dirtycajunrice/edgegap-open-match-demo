@@ -1,4 +1,3 @@
-
 /*
  * Codema
  *
@@ -12,12 +11,12 @@ package swagger
 
 import (
 	"context"
+	"fmt"
+	"github.com/antihax/optional"
 	"io/ioutil"
 	"net/http"
 	"net/url"
 	"strings"
-	"fmt"
-	"github.com/antihax/optional"
 )
 
 // Linger please
@@ -35,23 +34,23 @@ Get the metrics of a deployment.
  * @param optional nil or *MetricsApiDeploymentMetricsGetOpts - Optional Parameters:
      * @param "StartTime" (optional.String) -  Starting time for the query. Default to deployment start time. Should match %Y-%m-%d %H:%M:%S    Example: 2021-07-10 00:00:00
      * @param "EndTime" (optional.String) -  End time for the metrics. Default to now.Must be greater than start_time. Should match %Y-%m-%d %H:%M:%S    Example: 2021-07-19 00:00:00
-     * @param "Steps" (optional.String) -  Steps between each metrics.    Example: 30s, 1m, 5m 10m, 1h 
+     * @param "Steps" (optional.String) -  Steps between each metrics.    Example: 30s, 1m, 5m 10m, 1h
 
 @return MetricsResponse
 */
 
-type MetricsApiDeploymentMetricsGetOpts struct { 
+type MetricsApiDeploymentMetricsGetOpts struct {
 	StartTime optional.String
-	EndTime optional.String
-	Steps optional.String
+	EndTime   optional.String
+	Steps     optional.String
 }
 
 func (a *MetricsApiService) DeploymentMetricsGet(ctx context.Context, requestId string, localVarOptionals *MetricsApiDeploymentMetricsGetOpts) (MetricsResponse, *http.Response, error) {
 	var (
-		localVarHttpMethod = strings.ToUpper("Get")
-		localVarPostBody   interface{}
-		localVarFileName   string
-		localVarFileBytes  []byte
+		localVarHttpMethod  = strings.ToUpper("Get")
+		localVarPostBody    interface{}
+		localVarFileName    string
+		localVarFileBytes   []byte
 		localVarReturnValue MetricsResponse
 	)
 
@@ -99,7 +98,7 @@ func (a *MetricsApiService) DeploymentMetricsGet(ctx context.Context, requestId 
 				key = auth.Key
 			}
 			localVarHeaderParams["authorization"] = key
-			
+
 		}
 	}
 	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
@@ -120,52 +119,51 @@ func (a *MetricsApiService) DeploymentMetricsGet(ctx context.Context, requestId 
 
 	if localVarHttpResponse.StatusCode < 300 {
 		// If we succeed, return the data, otherwise pass on to decode error.
-		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
+		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 		return localVarReturnValue, localVarHttpResponse, err
 	}
 
 	if localVarHttpResponse.StatusCode >= 300 {
 		newErr := GenericSwaggerError{
-			body: localVarBody,
+			body:  localVarBody,
 			error: localVarHttpResponse.Status,
 		}
-		
+
 		if localVarHttpResponse.StatusCode == 200 {
 			var v MetricsResponse
-			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
-				if err != nil {
-					newErr.error = err.Error()
-					return localVarReturnValue, localVarHttpResponse, newErr
-				}
-				newErr.model = v
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
 				return localVarReturnValue, localVarHttpResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHttpResponse, newErr
 		}
-		
+
 		if localVarHttpResponse.StatusCode == 400 {
 			var v ModelError
-			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
-				if err != nil {
-					newErr.error = err.Error()
-					return localVarReturnValue, localVarHttpResponse, newErr
-				}
-				newErr.model = v
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
 				return localVarReturnValue, localVarHttpResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHttpResponse, newErr
 		}
-		
+
 		if localVarHttpResponse.StatusCode == 401 {
 			var v ModelError
-			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
-				if err != nil {
-					newErr.error = err.Error()
-					return localVarReturnValue, localVarHttpResponse, newErr
-				}
-				newErr.model = v
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
 				return localVarReturnValue, localVarHttpResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHttpResponse, newErr
 		}
-		
+
 		return localVarReturnValue, localVarHttpResponse, newErr
 	}
 
 	return localVarReturnValue, localVarHttpResponse, nil
 }
-

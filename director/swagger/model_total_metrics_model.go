@@ -10,8 +10,8 @@
 package swagger
 
 type TotalMetricsModel struct {
-	ReceiveTotal *MetricsModel `json:"receive_total,omitempty"`
-	TransmitTotal *MetricsModel `json:"transmit_total,omitempty"`
-	DiskReadTotal *MetricsModel `json:"disk_read_total,omitempty"`
+	ReceiveTotal   *MetricsModel `json:"receive_total,omitempty"`
+	TransmitTotal  *MetricsModel `json:"transmit_total,omitempty"`
+	DiskReadTotal  *MetricsModel `json:"disk_read_total,omitempty"`
 	DiskWriteTotal *MetricsModel `json:"disk_write_total,omitempty"`
 }

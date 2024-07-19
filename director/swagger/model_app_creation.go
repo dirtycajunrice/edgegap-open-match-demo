@@ -9,9 +9,8 @@
 
 package swagger
 
-type MetricsResponse struct {
-	Total *TotalMetricsModel `json:"total,omitempty"`
-	Cpu *MetricsModel `json:"cpu,omitempty"`
-	Mem *MetricsModel `json:"mem,omitempty"`
-	Network *NetworkMetricsModel `json:"network,omitempty"`
+type AppCreation struct {
+	// If the creation happened correctly
+	Success bool        `json:"success,omitempty"`
+	Version *AppVersion `json:"version,omitempty"`
 }

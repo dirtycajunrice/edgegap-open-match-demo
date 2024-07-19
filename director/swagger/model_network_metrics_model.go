@@ -9,7 +9,7 @@
 
 package swagger
 
-type AppVersions struct {
-	Versions []AppVersion `json:"versions,omitempty"`
-	TotalCount int32 `json:"total_count,omitempty"`
+type NetworkMetricsModel struct {
+	Receive  *MetricsModel `json:"receive,omitempty"`
+	Transmit *MetricsModel `json:"transmit,omitempty"`
 }

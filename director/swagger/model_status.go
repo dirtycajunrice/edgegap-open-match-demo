@@ -33,8 +33,8 @@ type Status struct {
 	// True if there is an Error with the Request
 	Error_ bool `json:"error"`
 	// The Error detail of the Request
-	ErrorDetail string `json:"error_detail,omitempty"`
-	Ports map[string]PortMapping `json:"ports,omitempty"`
+	ErrorDetail string                 `json:"error_detail,omitempty"`
+	Ports       map[string]PortMapping `json:"ports,omitempty"`
 	// The public IP
 	PublicIp string `json:"public_ip"`
 	// List of Active Sessions if Deployment App is Session Based

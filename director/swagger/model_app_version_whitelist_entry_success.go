@@ -11,6 +11,6 @@ package swagger
 
 type AppVersionWhitelistEntrySuccess struct {
 	// if the operation succeed
-	Success bool `json:"success"`
+	Success        bool                      `json:"success"`
 	WhitelistEntry *AppVersionWhitelistEntry `json:"whitelist_entry,omitempty"`
 }

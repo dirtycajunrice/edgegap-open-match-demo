@@ -36,5 +36,5 @@ type SessionGet struct {
 	SessionUsers []SessionUser `json:"session_users,omitempty"`
 	// IPS in the session
 	SessionIps []SessionUser `json:"session_ips,omitempty"`
-	Deployment *Deployment `json:"deployment"`
+	Deployment *Deployment   `json:"deployment"`
 }

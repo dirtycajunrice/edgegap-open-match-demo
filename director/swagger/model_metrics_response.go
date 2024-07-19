@@ -9,7 +9,9 @@
 
 package swagger
 
-type NetworkMetricsModel struct {
-	Receive *MetricsModel `json:"receive,omitempty"`
-	Transmit *MetricsModel `json:"transmit,omitempty"`
+type MetricsResponse struct {
+	Total   *TotalMetricsModel   `json:"total,omitempty"`
+	Cpu     *MetricsModel        `json:"cpu,omitempty"`
+	Mem     *MetricsModel        `json:"mem,omitempty"`
+	Network *NetworkMetricsModel `json:"network,omitempty"`
 }

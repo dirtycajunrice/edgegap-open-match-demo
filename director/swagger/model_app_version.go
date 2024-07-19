@@ -9,28 +9,28 @@
 
 package swagger
 
-type AppVersionUpdate struct {
+type AppVersion struct {
 	// The Version Name
-	Name string `json:"name,omitempty"`
+	Name string `json:"name"`
 	// If the Version is active currently in the system
 	IsActive bool `json:"is_active,omitempty"`
 	// The Repository where the image is (i.e. 'harbor.edgegap.com' or 'docker.io')
-	DockerRepository string `json:"docker_repository,omitempty"`
+	DockerRepository string `json:"docker_repository"`
 	// The name of your image (i.e. 'edgegap/demo')
-	DockerImage string `json:"docker_image,omitempty"`
+	DockerImage string `json:"docker_image"`
 	// The tag of your image (i.e. '0.1.2')
-	DockerTag string `json:"docker_tag,omitempty"`
+	DockerTag string `json:"docker_tag"`
 	// The username to access the docker repository
 	PrivateUsername string `json:"private_username,omitempty"`
 	// The Private Password or Token of the username (We recommend to use a token)
 	PrivateToken string `json:"private_token,omitempty"`
 	// Units of vCPU needed (1024= 1vcpu)
-	ReqCpu int32 `json:"req_cpu,omitempty"`
+	ReqCpu int32 `json:"req_cpu"`
 	// Units of memory in MB needed (1024 = 1GB)
-	ReqMemory int32 `json:"req_memory,omitempty"`
+	ReqMemory int32 `json:"req_memory"`
 	// Units of GPU needed (1024= 1 GPU)
 	ReqVideo int32 `json:"req_video,omitempty"`
-	// The Max duration of the game
+	// The Max duration of the game in minute. 0 means forever.
 	MaxDuration int32 `json:"max_duration,omitempty"`
 	// Allow to inject ASA Variables
 	UseTelemetry bool `json:"use_telemetry,omitempty"`
@@ -47,8 +47,8 @@ type AppVersionUpdate struct {
 	// Estimated maximum time in seconds to deploy, after this time we will consider it not working and retry.
 	TimeToDeploy int32 `json:"time_to_deploy,omitempty"`
 	// Parameters defining the behavior of a session-based app version. If set, the app is considered to be session-based.
-	SessionConfig *AppVersionUpdateSessionConfig `json:"session_config,omitempty"`
-	Ports []AppVersionPort `json:"ports,omitempty"`
-	Probe *AppVersionProbe `json:"probe,omitempty"`
-	Envs []AppVersionEnv `json:"envs,omitempty"`
+	SessionConfig *AppVersionCreateSessionConfig `json:"session_config,omitempty"`
+	Ports         []AppVersionPort               `json:"ports,omitempty"`
+	Probe         *AppVersionProbe               `json:"probe,omitempty"`
+	Envs          []AppVersionEnv                `json:"envs,omitempty"`
 }

@@ -15,8 +15,8 @@ type Pagination struct {
 	// Next page number
 	NextPageNumber int32 `json:"next_page_number,omitempty"`
 	// Previous page number
-	PreviousPageNumber int32 `json:"previous_page_number,omitempty"`
-	Paginator *Paginator `json:"paginator,omitempty"`
+	PreviousPageNumber int32      `json:"previous_page_number,omitempty"`
+	Paginator          *Paginator `json:"paginator,omitempty"`
 	// If there is a next page
 	HasNext bool `json:"has_next,omitempty"`
 	// If there is a previous page
