@@ -1,5 +1,5 @@
 # Use golang for builder
-FROM golang:1.22-alpine AS build
+FROM golang:1.16-alpine AS build
 # Pass in the function to determine path
 ARG FUNCTION_NAME=front-end
 # Use a standard workdir
