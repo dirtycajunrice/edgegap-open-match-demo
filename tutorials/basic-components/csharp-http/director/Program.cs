@@ -1,3 +1,0 @@
-﻿using director;
-
-Director.Start();
